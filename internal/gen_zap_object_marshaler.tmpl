@@ -1,0 +1,86 @@
+// Code generated with zap-obj-marshaler-gen, DO NOT EDIT.
+package {{.PackageName}}
+
+import "go.uber.org/zap/zapcore"
+
+{{ range $StructType, $Fields := .TargetStructs -}}
+    func (l *{{ $StructType }}) MarshalLogObject(enc zapcore.ObjectEncoder) error {
+    var err error
+    {{ range $Fields -}}
+        {{ if .FieldKind.IsSlice -}}
+            {{ $encFn  := (zapBasicArrayEncoderFunc .OriginalElementType) -}}
+            {{ if and .OmitEmpty -}}
+                if len(l.{{ .FieldName }}) > 0 {
+            {{ end -}}
+            err = enc.AddArray("{{.ZapKey }}", zapcore.ArrayMarshalerFunc(func(enc zapcore.ArrayEncoder) error {
+            for _, v := range l.{{ .FieldName }} {
+            {{ if ne $encFn "" -}}
+                {{ if .ElementKind.IsPtr -}}
+                    if l.{{ .FieldName }} != nil {
+                    enc.{{ $encFn }}(*v)
+                    }
+                {{ else -}}
+                    enc.{{ $encFn }}(v)
+                {{ end -}}
+            {{ else -}} {{/* not found appropriate encoder func, use reflect endoder */}}
+                if v, ok := any(v).(zapcore.ObjectMarshaler); ok {
+                err = enc.AppendObject(v)
+                if err != nil {
+                return err
+                }
+                } else {
+                err = enc.AppendReflected(v)
+                if err != nil {
+                return err
+                }
+                }
+            {{ end -}}
+            }
+            return nil
+            }))
+            if err != nil {
+            return err
+            }
+            {{ if and .OmitEmpty -}}
+                }
+            {{ end -}}
+        {{ else -}}
+            {{ $zeroValueForType := (zeroValueForType .OriginalFieldType) -}}
+            {{ $encFn  := (zapBasicEncoderFunc .OriginalFieldType) -}}
+            {{ if ne $encFn "" -}}
+                {{ if .FieldKind.IsPtr -}}
+                    if l.{{ .FieldName }} != nil {
+                    enc.{{ $encFn }}("{{.ZapKey }}", *l.{{ .FieldName }})
+                    } else {
+                    err = enc.AddReflected("{{.ZapKey }}", nil)
+                    if err != nil {
+                    return err
+                    }
+                    }
+                {{ else -}}
+                    {{ if and .OmitEmpty  (ne $zeroValueForType "") -}}
+                        if  l.{{ .FieldName }} != {{ $zeroValueForType }} {
+                    {{ end -}}
+                    enc.{{ $encFn }}("{{.ZapKey }}", l.{{ .FieldName }})
+                    {{ if and .OmitEmpty  (ne $zeroValueForType "") -}}
+                        }
+                    {{ end -}}
+                {{ end -}}
+            {{ else -}} {{/*  not found appropriate encoder func, use reflect endoder */}}
+                if v, ok := any(l.{{ .FieldName }}).(zapcore.ObjectMarshaler); ok {
+                err = enc.AddObject("{{.ZapKey }}", v)
+                if err != nil {
+                return err
+                }
+                } else {
+                err = enc.AddReflected("{{.ZapKey }}", l.{{ .FieldName }})
+                if err != nil {
+                return err
+                }
+                }
+            {{ end -}}
+        {{ end -}}
+    {{ end -}}
+    return err
+    }
+{{ end }}
