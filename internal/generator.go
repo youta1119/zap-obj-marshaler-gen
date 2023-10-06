@@ -104,9 +104,9 @@ var (
 		"uint8":         "AddUint8",
 		"string":        "AddString",
 		"uintptr":       "AddUintptr",
-		"[]byte":        "AddBinary",
 		"time.Time":     "AddTime",
 		"time.Duration": "AddDuration",
+		"[]byte":        "AddBinary",
 	}
 	zapBasicArrayEncoderFuncForType = map[string]string{
 		"bool":          "AppendBool",

@@ -23,17 +23,17 @@ import "go.uber.org/zap/zapcore"
                     enc.{{ $encFn }}(v)
                 {{ end -}}
             {{ else -}} {{/* not found appropriate encoder func, use reflect endoder */}}
-                if v, ok := any(v).(zapcore.ObjectMarshaler); ok {
-                err = enc.AppendObject(v)
-                if err != nil {
-                return err
-                }
-                } else {
-                err = enc.AppendReflected(v)
-                if err != nil {
-                return err
-                }
-                }
+            if v, ok := any(v).(zapcore.ObjectMarshaler); ok {
+            err = enc.AppendObject(v)
+            if err != nil {
+            return err
+            }
+            } else {
+            err = enc.AppendReflected(v)
+            if err != nil {
+            return err
+            }
+            }
             {{ end -}}
             }
             return nil
@@ -51,12 +51,16 @@ import "go.uber.org/zap/zapcore"
                 {{ if .FieldKind.IsPtr -}}
                     if l.{{ .FieldName }} != nil {
                     enc.{{ $encFn }}("{{.ZapKey }}", *l.{{ .FieldName }})
-                    } else {
-                    err = enc.AddReflected("{{.ZapKey }}", nil)
-                    if err != nil {
-                    return err
-                    }
-                    }
+                    {{ if .OmitEmpty -}}
+                        }
+                    {{ else -}}
+                        } else {
+                        err = enc.AddReflected("{{.ZapKey }}", nil)
+                        if err != nil {
+                        return err
+                        }
+                        }
+                    {{ end -}}
                 {{ else -}}
                     {{ if and .OmitEmpty  (ne $zeroValueForType "") -}}
                         if  l.{{ .FieldName }} != {{ $zeroValueForType }} {
@@ -67,17 +71,17 @@ import "go.uber.org/zap/zapcore"
                     {{ end -}}
                 {{ end -}}
             {{ else -}} {{/*  not found appropriate encoder func, use reflect endoder */}}
-                if v, ok := any(l.{{ .FieldName }}).(zapcore.ObjectMarshaler); ok {
-                err = enc.AddObject("{{.ZapKey }}", v)
-                if err != nil {
-                return err
-                }
-                } else {
-                err = enc.AddReflected("{{.ZapKey }}", l.{{ .FieldName }})
-                if err != nil {
-                return err
-                }
-                }
+            if v, ok := any(l.{{ .FieldName }}).(zapcore.ObjectMarshaler); ok {
+            err = enc.AddObject("{{.ZapKey }}", v)
+            if err != nil {
+            return err
+            }
+            } else {
+            err = enc.AddReflected("{{.ZapKey }}", l.{{ .FieldName }})
+            if err != nil {
+            return err
+            }
+            }
             {{ end -}}
         {{ end -}}
     {{ end -}}

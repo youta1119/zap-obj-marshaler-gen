@@ -224,204 +224,109 @@ func (l *OmitEmpty) MarshalLogObject(enc zapcore.ObjectEncoder) error {
 	}
 	if l.BoolPtr != nil {
 		enc.AddBool("BoolPtr", *l.BoolPtr)
-	} else {
-		err = enc.AddReflected("BoolPtr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Complex128 != 0 {
 		enc.AddComplex128("Complex128", l.Complex128)
 	}
 	if l.Complex128Ptr != nil {
 		enc.AddComplex128("Complex128Ptr", *l.Complex128Ptr)
-	} else {
-		err = enc.AddReflected("Complex128Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Complex64 != 0 {
 		enc.AddComplex64("Complex64", l.Complex64)
 	}
 	if l.Complex64Ptr != nil {
 		enc.AddComplex64("Complex64Ptr", *l.Complex64Ptr)
-	} else {
-		err = enc.AddReflected("Complex64Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Float64 != 0 {
 		enc.AddFloat64("Float64", l.Float64)
 	}
 	if l.Float64Ptr != nil {
 		enc.AddFloat64("Float64Ptr", *l.Float64Ptr)
-	} else {
-		err = enc.AddReflected("Float64Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Float32 != 0 {
 		enc.AddFloat32("Float32", l.Float32)
 	}
 	if l.Float32Ptr != nil {
 		enc.AddFloat32("Float32Ptr", *l.Float32Ptr)
-	} else {
-		err = enc.AddReflected("Float32Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Int != 0 {
 		enc.AddInt("Int", l.Int)
 	}
 	if l.IntPtr != nil {
 		enc.AddInt("IntPtr", *l.IntPtr)
-	} else {
-		err = enc.AddReflected("IntPtr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Int64 != 0 {
 		enc.AddInt64("Int64", l.Int64)
 	}
 	if l.Int64Ptr != nil {
 		enc.AddInt64("Int64Ptr", *l.Int64Ptr)
-	} else {
-		err = enc.AddReflected("Int64Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Int32 != 0 {
 		enc.AddInt32("Int32", l.Int32)
 	}
 	if l.Int32Ptr != nil {
 		enc.AddInt32("Int32Ptr", *l.Int32Ptr)
-	} else {
-		err = enc.AddReflected("Int32Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Int16 != 0 {
 		enc.AddInt16("Int16", l.Int16)
 	}
 	if l.Int16Ptr != nil {
 		enc.AddInt16("Int16Ptr", *l.Int16Ptr)
-	} else {
-		err = enc.AddReflected("Int16Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Int8 != 0 {
 		enc.AddInt8("Int8", l.Int8)
 	}
 	if l.Int8Ptr != nil {
 		enc.AddInt8("Int8Ptr", *l.Int8Ptr)
-	} else {
-		err = enc.AddReflected("Int8Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.String != "" {
 		enc.AddString("String", l.String)
 	}
 	if l.StringPtr != nil {
 		enc.AddString("StringPtr", *l.StringPtr)
-	} else {
-		err = enc.AddReflected("StringPtr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Uint != 0 {
 		enc.AddUint("Uint", l.Uint)
 	}
 	if l.UintPtr != nil {
 		enc.AddUint("UintPtr", *l.UintPtr)
-	} else {
-		err = enc.AddReflected("UintPtr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Uint64 != 0 {
 		enc.AddUint64("Uint64", l.Uint64)
 	}
 	if l.Uint64Ptr != nil {
 		enc.AddUint64("Uint64Ptr", *l.Uint64Ptr)
-	} else {
-		err = enc.AddReflected("Uint64Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Uint32 != 0 {
 		enc.AddUint32("Uint32", l.Uint32)
 	}
 	if l.Uint32Ptr != nil {
 		enc.AddUint32("Uint32Ptr", *l.Uint32Ptr)
-	} else {
-		err = enc.AddReflected("Uint32Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Uint16 != 0 {
 		enc.AddUint16("Uint16", l.Uint16)
 	}
 	if l.Uint16Ptr != nil {
 		enc.AddUint16("Uint16Ptr", *l.Uint16Ptr)
-	} else {
-		err = enc.AddReflected("Uint16Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	if l.Uint8 != 0 {
 		enc.AddUint8("Uint8", l.Uint8)
 	}
 	if l.Uint8Ptr != nil {
 		enc.AddUint8("Uint8Ptr", *l.Uint8Ptr)
-	} else {
-		err = enc.AddReflected("Uint8Ptr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	enc.AddBinary("Bytes", l.Bytes)
 	enc.AddUintptr("UintPtrVal", l.UintPtrVal)
 	if l.UintPtrValPtr != nil {
 		enc.AddUintptr("UintPtrValPtr", *l.UintPtrValPtr)
-	} else {
-		err = enc.AddReflected("UintPtrValPtr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	enc.AddTime("Time", l.Time)
 	if l.TimePtr != nil {
 		enc.AddTime("TimePtr", *l.TimePtr)
-	} else {
-		err = enc.AddReflected("TimePtr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	enc.AddDuration("Duration", l.Duration)
 	if l.DurationPtr != nil {
 		enc.AddDuration("DurationPtr", *l.DurationPtr)
-	} else {
-		err = enc.AddReflected("DurationPtr", nil)
-		if err != nil {
-			return err
-		}
 	}
 	return err
 }
